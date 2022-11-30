@@ -1,0 +1,5 @@
+.pio
+.vscode
+Todo.txt
+opcodes.txt 
+.travis.yml
