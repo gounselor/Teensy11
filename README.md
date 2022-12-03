@@ -156,10 +156,10 @@ E [addr] dump i/o space
 G addr   continue at address
 W [addr] words..., write into memory
 > [addr] same as W
-  Tape bootloader example:
-  > 100000 012700 172526 010040 012740 060003 000777
-  G 100000 (break (^p)
-  G 0  
+# Tape bootloader example:
+> 100000 012700 172526 010040 012740 060003 000777
+G 100000 (break (^p)
+G 0  
 ```
 
 ### Howto run a paper tape
@@ -231,7 +231,7 @@ Using the small "shell" do: (don't type # comments)
 ```
     
 	It should load the tape's boot block and will loop then, so press *CTRL-P*.
-  If back in shell, type *G 0*. If you get the *=* prompt, follow the instructions from the links above.
+  If back in shell, type `G 0`. If you get the `=` prompt, follow the instructions from the links above.
 
   Example install session:
 
@@ -369,7 +369,7 @@ drwxrwxr-x 14 bin       224 May 13 20:16 usr
 #
 ```
       
-It's important to use "rkunix" here at the *@*, the other kernels do not work.
+It's important to use `rkunix` here at the `@`, the other kernels do not work.
   
 If you have a boot prompt, and are able to login, type 'sync' 3 times, and go back (*^p*)
 to the emulator. Make a backup of your disk now, to save your work so far:
