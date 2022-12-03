@@ -16,7 +16,7 @@ superblock while reading it. (And 2k patches are installed). TFTP server support
 ## Acknowledgements, Authors and Thanks
 
 This project is based on the work of Dave Cheney's [AVR11](https://github.com/davecheney/avr11) which 
-was derived from Julius Schmidt's pdp11 Javascript simulator.
+was derived from [this](http://pdp11.aiju.de) javascript emulator.
 
 It also uses code from Frank B. for displaying Teensy FlexRam information. 
 It's available [here](https://forum.pjrc.com/threads/57326-T4-0-Memory-trying-to-make-sense-of-the-different-regions?p=227539&viewfull=1#post227539).
