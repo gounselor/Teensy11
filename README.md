@@ -371,7 +371,7 @@ drwxrwxr-x 14 bin       224 May 13 20:16 usr
 #
 ```
       
-It's important to use `rkunix` here at the `@`, the other kernels do not work.
+It's important to use `rkunix` at the `@` prompt, the other kernels do not work.
   
 If you have a boot prompt, and are able to login, type 'sync' 3 times, and go back (*^p*)
 to the emulator. Make a backup of your disk now, to save your work so far:
