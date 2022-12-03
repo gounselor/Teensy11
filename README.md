@@ -374,56 +374,59 @@ It's important to use `rkunix` here at the `@`, the other kernels do not work.
 If you have a boot prompt, and are able to login, type 'sync' 3 times, and go back (*^p*)
 to the emulator. Make a backup of your disk now, to save your work so far:
       
-$ cp r.rk0 r.bak
-
-- If you want /usr/source and /usr/doc follow again the gunkies link.
-- Note: you have to create the device files using /etc/mknod, which is a bit painful.
-  You can actually attach the file V6/mkdevs.tap to a tape and cp it over:
-
+`$ cp r.rk0 r.bak`
 
 - Note: In V6: backspace/delete is '#', kill (ignore) a whole mistyped line: just type '@' 
+- If you want /usr/source and /usr/doc, follow again the gunkies link.
+- Note: you have to create the device files using /etc/mknod, which is a bit painful.
+  See below for a simpler solution using a **fake tape**.
 
-  If you follow https://gunkies.org/wiki/Installing_UNIX_v6_(PDP-11)_on_SIMH 
+- If you follow https://gunkies.org/wiki/Installing_UNIX_v6_(PDP-11)_on_SIMH 
   carefully you should end up with a working V6 with sources and docs.
 
-  To enhance it a bit you could follow this:
+- To enhance it a bit you could follow this:
 
   http://mercury.lcs.mit.edu/~jnc/tech/V6Unix.html, starting at 
   "First things to do on Unix". 
 
-  Later you could also do: http://mercury.lcs.mit.edu/~jnc/tech/ImprovingV6.html.
+- Later you could also do: http://mercury.lcs.mit.edu/~jnc/tech/ImprovingV6.html.
 
-  I tried most of the stuff and it seems to work.
+I tried most of the stuff and it seems to work.
 
-  It's a bit hard to get Noel's sources to V6, i have a small gotp program for tape 
-  creation which unfortunately is not finished yet. You can always use pad a file
-  to 512 byte blocks, attach it as tape and cat it in V6. You need to make /dev/mt0 first.
+It's a bit hard to get Noel's sources to V6, i have a small gotp program for tape 
+creation which unfortunately is not finished yet. You can always use a file padded
+to 512 byte blocks, attach it as tape and cat it in V6. You need to make /dev/mt0 first.
 
-  In V6:
+In V6:
 
   ```
   /etc/mknod /dev/mt0 b 3 0
   ```
 
-  On some unix box:
+On some unix box:
 
-  ```
-  dd if=mkdevs.sh of=mkdevs.tap conv=noerror,sync
-  ```
-  - copy mkdevs.tap to the sd card. If you have airlift you can tftp it. 
-  - attach it in the "shell": (*^p*, type command, type *cont*)
-    - tm 0 mkdevs.tap
-  - in V6 chdir /tmp; cat /dev/mt0 > mkdevs.sh
-    run sh mkdevs.sh
+```
+dd if=mkdevs.sh of=mkdevs.tap conv=noerror,sync
+```
+- copy mkdevs.tap to the sd card. If you have airlift you can tftp it. 
+- attach it in the "shell": (**^p**, type command, type **cont**)
+- tm 0 mkdevs.tap
+- in V6 `chdir /tmp; cat /dev/mt0 > mkdevs.sh`
+- run `sh mkdevs.sh`
 
-  *WARNING*: don't type 'df' without arguments in V6 until you patched/recompiled it, 
-  the emulator can panic if unattached disks are accessed. Using it with a device as
-  argument: # df /dev/rk0 should work.
+This **fake tape** method can be used to copy arbitrary files to the V6 system. 
+It's a bit cumbersome, once my gotp program is finished this could be used.
+I will mention it here.
+
+**WARNING**: don't type 'df' without arguments in V6 until you patched/recompiled it, 
+the emulator can panic if unattached disks are accessed. Using it with a device as
+argument: # df /dev/rk0 should work.
 
 ## Bugs
 
 V6 runs quite ok, you can compile you own kernel, compile the c compiler with patches, bc works, chess works.
-You can even dump / restore using /dev/mt0 disks. icheck etc works. 
+You can even dump / restore using /dev/mt0 disks. icheck etc works. You can do programming in c. 
+It even runs some programsfrom 1BSD like ex, csh is possible etc.
 
 ### Bugs and caveats
 
@@ -433,13 +436,16 @@ You can even dump / restore using /dev/mt0 disks. icheck etc works.
   to the actual existing disks, see the gunkies link for that. I even have a 'ndf' with with some mkmtab command can detect
   the actual mounted disks and work correctly.
 
-- You should sync;sync;sync before detaching disk or resetting the emulater.
+- You should sync;sync;sync before detaching a disk or resetting the emulater. Non root filesystems should be unmounted before.
+  Mount and umount are in /etc!
 
-- You better backup your disk files from time to time. You can icheck /dev/rrk0 them inside V6.
+- You better backup your disk files from time to time. You can `icheck /dev/rrk0` them inside V6.
 
-- The MMU implementation is so bare that it just can run V6 and some DEC programs. It cannot unfortunately run 2.9BSD.
+- The MMU implementation is so bare, that it just can run V6 and some DEC programs. Unfortunately it cannot  run 2.9BSD.
 
-- The disassembler in the monitor might not be 100% correct.
+- The disassembler in the monitor might not be 100% correct. Maybe not even 80%. But it's better then nothing.
+  To debug issues, especially on boot time, you can always use the **dump** command in the small shell to write
+  the first 64k to a file and use a *working* disassembler on that.
 
 - The tape (tm11) emulation cannot skip over files. It has no idea of tape marks but works on flat files.
   You can always detach- reattach single files of a longer tape. Using this kludge it's possible to 
