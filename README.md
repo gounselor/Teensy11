@@ -100,7 +100,7 @@ https://github.com/MajenkoLibraries/CLI
 
 Please see the repositories for the licenses.
 
-## Howto use
+## How to use
 
 Get PlatformIO up and running, install the platform and board. 
 Import the project, build and flash to the teensy 4.1. 
@@ -208,7 +208,7 @@ program using the correct serial device. (See above).
 
 #### Installing V6
 
-You can basically follow [this](http://mercury.lcs.mit.edu/~jnc/tech/V6Unix.html) or [that](https://gunkies.org/wiki/Installing_UNIX_v6_(PDP-11)_on_SIMH). The tape loader program is entered differently, but once V6 booted, the info from the
+You can basically follow [this](http://mercury.lcs.mit.edu/~jnc/tech/V6Unix.html) or [that](https://gunkies.org/wiki/Installing_UNIX_v6_(PDP-11)_on_SIMH). The tape loader program is entered differently, but once V6 has booted, the info from the
 web pages should apply.
 
 Using the small "shell" do: (don't type # comments)
@@ -218,9 +218,11 @@ Using the small "shell" do: (don't type # comments)
   cp empty.rkx d.rk2
   # attach disks and tape:
   rk 0 r.rk0
-    # not needed now, but later, if disks are not mounted inside v6 you can 
-    # always ctrl-p and adjust disks / tapes
-    # (rk 1 s.rk1, rk 2 d.rk2)
+    # not needed now, but later for the source and doc disks. 
+    # If disks are not mounted inside v6 you can always ctrl-p and adjust disks / tapes:
+    # for example:
+    # rk 1 s.rk1 
+    # rk 2 d.rk2
   tm 0 v6.tape
     # (https://www.tuhs.org/Archive/Distributions/Research/Ken_Wellsch_v6/v6.tape.gz)
     # might need deblock from: 
