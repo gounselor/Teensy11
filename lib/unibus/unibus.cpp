@@ -6,6 +6,9 @@
 #include "unibus.h"
 #include "rk05.h"
 #include "tm11.h"
+#include "console.h"
+
+extern void displayWordExternal(uint32_t val);
 
 namespace unibus {
 
@@ -27,7 +30,9 @@ extern "C" uint8_t external_psram_size;
 #define MEM 0760000
 
 //uint16_t core16[MEM >> 1];
-uint16_t *core16 = (uint16_t *) (0x70000000);
+//uint16_t *core16 = (uint16_t *) (0x70000000);
+//uint16_t *core16 = (uint16_t *) (0x20200000+0x10000); 512k RAM2 + 64k because of heap
+uint16_t *core16;
 uint8_t  *core8 = (uint8_t *) core16; 
 
 bool dump(void) {
@@ -46,10 +51,21 @@ bool dump(void) {
   return false;
 }
 
+#define IGNORE_EXTMEM 1
+
 void reset() {
-  if (external_psram_size == 0) {
-    Serial.println("EXTMEM not available, aborting.");
-    panic();
+  if (IGNORE_EXTMEM || external_psram_size == 0) {
+    Serial.println("EXTMEM not available, using OCRAM.");
+    core16 = (uint16_t *) malloc(MEM);
+    if (core16 == NULL) {
+      Serial.println("Malloc failed.");
+      panic();
+    }    
+    core8 = (uint8_t *) core16;
+    Serial.printf("Core is at OCRAM: 0x%08x\r\n", core16);    
+  } else {
+    Serial.printf("Using EXTMEM: %dMb\r\n", external_psram_size);
+    core16 = (uint16_t *) (0x70000000);
   }
   memset(&core16[0], 0, MEM);
   SLR = 0;
@@ -81,16 +97,20 @@ uint16_t read16(const uint32_t a) {
     return SWR; //0173030;
   }
 
-  if (a == 0777572) { // SR0
+  if (a == 0777572) { // SSR0
     return mmu::SR0;
   }
 
-  if (a == 0777574) { // SR1
+  if (a == 0777574) { // SSR1
     return mmu::SR1;
   }
 
-  if (a == 0777576) { // SR2
+  if (a == 0777576) { // SSR2
     return mmu::SR2;
+  }
+
+  if (a == 0777516) { // SSR3
+    return 0; // mmu::SSR3;
   }
 
   if (a == 0777746) { // CCR
@@ -178,7 +198,13 @@ void write16(const uint32_t a, const uint16_t v) {
     case 0777576:
       mmu::SR2 = v;
       return;
+    case 0777516:
+      //mmu::SR3 = v;
+      return;
     case 0777570: // switch register
+    if (console::active) {
+      displayWordExternal(v);
+    }
       SWR = v;
       return;
   }

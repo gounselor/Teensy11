@@ -198,6 +198,10 @@ void displayWord(Adafruit_AlphaNum4 *hi, Adafruit_AlphaNum4 *lo, uint32_t val) {
   lo->writeDisplay();
 }
 
+void displayWordExternal(uint32_t val) {
+  displayWord(&m72, &m73, val);
+}
+
 void writeByte(Adafruit_8x16matrix *mx, uint8_t line, uint8_t val) {
   mx->drawPixel(line, 0, val & (1 << 0));
   mx->drawPixel(line, 1, val & (1 << 1));

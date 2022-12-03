@@ -60,8 +60,9 @@ $ <- you can type help now. The monitor commands (below) are not in the help.
     - Attach rk0 again:
       rk 0 r.rk0
     - Type "boot", at the @ prompt, type "rkunix". This should give you a login: prompt.
+      It's important to use "rkunix" here, the other kernels do not work.
   
-    - If you have a boot prompt, and are able to login, type sync 3 times, and go back
+    - If you have a boot prompt, and are able to login, type 'sync' 3 times, and go back
       to the emulator. Make a backup of your disk now, to save your work so far:
       
       $ cp r.rk0 r.bak
