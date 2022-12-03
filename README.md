@@ -428,7 +428,7 @@ argument: # df /dev/rk0 should work.
 
 V6 runs quite ok, you can compile you own kernel, compile the c compiler with patches, bc works, chess works.
 You can even dump / restore using /dev/mt0 disks. icheck etc works. You can do programming in c. 
-It even runs some programsfrom 1BSD like ex, csh is possible etc.
+It even runs some programs from 1BSD like ex, csh is possible etc.
 
 ### Bugs and caveats
 
