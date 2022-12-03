@@ -51,7 +51,7 @@ bool dump(void) {
   return false;
 }
 
-#define IGNORE_EXTMEM 1
+#define IGNORE_EXTMEM 0
 
 void reset() {
   if (IGNORE_EXTMEM || external_psram_size == 0) {
