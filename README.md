@@ -7,11 +7,11 @@ A PDP11/40 emulator for the [Teensy 4.1](https://www.pjrc.com/store/teensy41.htm
 In the basic hardware version the emulator is able to run V6 including the installation from tape files.  
 It has a RK05 disk drive emulation and a TM11 magtape emulation which is good enough to do the initial V6 install.
 Papertapes like DEC's maindec can be loaded, it has a simple shell to manipulate the sd card, 
-attach drives and tapes, run papertapes, set the rtc clock if installed, dump first 64k of "core" to the sdcard,
+attach drives and tapes, set the rtc clock if installed, dump first 64k of "core" to the sdcard,
 and even an tftp server if you install an airlift featherwing, see Hardware used.
 
 If you add some feather wings then you can get an RTC which can set the V6 time if patched into the rk05 drive 0 
-superblock while reading it. (And 2k patches are installed). TFTP server support 
+superblock while reading it. (And 2k patches are installed). TFTP server support if you have an AirLift Feather Wing.
 
 ## Acknowledgements, Authors and Thanks
 
@@ -19,7 +19,7 @@ This project is based on the work of Dave Cheney's [AVR11](https://github.com/da
 was derived from Julius Schmidt's pdp11 Javascript simulator.
 
 It also uses code from Frank B. for displaying Teensy FlexRam information. 
-It's available [here](https://forum.pjrc.com/threads/57326-T4-0-Memory-trying-to-make-sense-of-the-different-regions?p=227539&viewfull=1#post227539)
+It's available [here](https://forum.pjrc.com/threads/57326-T4-0-Memory-trying-to-make-sense-of-the-different-regions?p=227539&viewfull=1#post227539).
 
 The project uses some libraries from other people, please see platformio.ini which ones are used.
 
@@ -40,10 +40,15 @@ You can add 8 or 16Mb of PSRAM to it, this should be used automatically but can 
 If you want a more sophisticated blinkenlights version you can build one using the following parts:
 
 [Teensy 3.x Feather Adapter](https://www.adafruit.com/product/3200)
+
 [Adafruit Quad 2x2 FeatherWing](https://www.adafruit.com/product/4253)
-[Adafruit AirLift FeatherWing][(https://www.adafruit.com/product/4264)
+
+[Adafruit AirLift FeatherWing](https://www.adafruit.com/product/4264)
+
 [DS3231 Precision RTC FeatherWing](https://www.adafruit.com/product/3028)
+
 2x [Adafruit 0.8" 8x16 LED Matrix FeatherWing](https://www.adafruit.com/product/3152)
+
 2x [Adafruit 0.56" 4-Digit 7-Segment FeatherWing](https://www.adafruit.com/product/3108)
 
 Please see the pictures directory for examples. The feather wings should be configured 
