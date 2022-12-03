@@ -65,9 +65,11 @@ The top/bottom location does not really matter but left right should be correct.
 If everything works, you get the rk0 Cylinder/Sector displayed on the 7-Segment displays and
 the registers in binary on the matrix displays. Register order would be:
 
+```
 [ R0 ] [ R1 ]
 [ R2 ] [ R2 ]
 ...
+```
 The last line shows the processor status word on the left and a clock tick counter on the right matrix.
 
 ## Software used
