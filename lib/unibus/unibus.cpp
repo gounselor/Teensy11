@@ -55,7 +55,7 @@ bool dump(void) {
 
 void reset() {
   if (IGNORE_EXTMEM || external_psram_size == 0) {
-    Serial.println("EXTMEM not available, using OCRAM.");
+    Serial.println("EXTMEM not available/enabled, using OCRAM.");
     core16 = (uint16_t *) malloc(MEM);
     if (core16 == NULL) {
       Serial.println("Malloc failed.");
@@ -64,9 +64,10 @@ void reset() {
     core8 = (uint8_t *) core16;
     Serial.printf("Core is at OCRAM: 0x%08x\r\n", core16);    
   } else {
-    Serial.printf("Using EXTMEM: %dMb\r\n", external_psram_size);
+    Serial.printf("%dMb EXTMEM installed, using as core.\r\n", external_psram_size);
     core16 = (uint16_t *) (0x70000000);
     core8 = (uint8_t *) core16;
+    Serial.printf("Core is at EXTMEM: 0x%08x\r\n", core16);    
   }
   memset(&core16[0], 0, MEM);
   SLR = 0;

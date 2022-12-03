@@ -284,15 +284,21 @@ void setup() {
 #endif
 
   Wire.begin();
+  int i2c_count = 0;
   Serial.printf("I2C bus addr: ");
   for (byte i = 0; i < 127; i++) { 
     Wire.beginTransmission (i);
     if (Wire.endTransmission () == 0) {      
       Serial.printf("0x%02x ", i);
+      i2c_count++;
       delay(10);
     } 
   }
-  Serial.println(); 
+  if (i2c_count) {    
+    Serial.println(); 
+  } else {
+    Serial.println("no devices found.");
+  }
   Serial.printf("CPU  : %d MHz\r\n", F_CPU_ACTUAL / 1000 / 1000);
   extern uint8_t external_psram_size;
   Serial.printf("PSRAM: %dMb\r\n", external_psram_size);
