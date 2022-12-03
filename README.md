@@ -83,12 +83,19 @@ The software itself is using Arduino/Teensyduino.
 The following libraries are used:
 
 https://github.com/greiman/SdFat-beta/#2.0.0-beta.9 
+
 https://github.com/luni64/TeensyTimerTool
+
 https://github.com/adafruit/RTClib
+
 https://github.com/adafruit/WiFiNINA
+
 https://github.com/adafruit/Adafruit-GFX-Library
+
 https://github.com/adafruit/Adafruit_LED_Backpack
+
 https://github.com/adafruit/Adafruit_BusIO
+
 https://github.com/MajenkoLibraries/CLI
 
 Please see the repositories for the licenses.
@@ -125,14 +132,15 @@ $ <- you can type help now. The monitor commands (below) are not in the help.
 
 The commands should be more or less self explaining. Some Notes:
 
-- the **pt** command loads the papertape to 0200, start it with G 200
-- if you break the running emulation with **^P** boot works like cont, so for a
+- the **pt** command loads the papertape to 0200, start it with G 200, values are octal!
+- if you break the running emulation with **^P**, boot works like cont, so for a
   real boot you should **reset** before.
 - **date** just makes sense if you have the [DS3231 Precision RTC FeatherWing](https://www.adafruit.com/product/3028)
-  featherwing installed.
-- for **tftp** you need a [Adafruit AirLift FeatherWing][(https://www.adafruit.com/product/4264) installed.
-- the **trace** command sets the number of next instructions which will be printed to the serial port if you press **^T**
+  installed.
+- for **tftp** you need an [Adafruit AirLift FeatherWing](https://www.adafruit.com/product/4264) installed.
+- the **trace** command sets the number of instructions which will be printed to the serial port if you press **^T**
 - You can attach disk image files with **rk "number" filename**, tape files with **tm "number" filename**.
+- At least 4 of these devices might be supported in parallel. Might be 8, just don't remember right now.
 - You can detach these images by using a **-** as the filename. rk/tm without argument shows the current configuration.
 
 The monitor commands are not yet in the help, they are:
@@ -141,6 +149,7 @@ The monitor commands are not yet in the help, they are:
 
 Note: they are upper-case!
 
+```
 D [addr] disassemble, if no address is given continue on next addr
 M [addr] memory dump, if no address is given continue on next addr
 E [addr] dump i/o space
@@ -151,14 +160,19 @@ W [addr] words..., write into memory
   > 100000 012700 172526 010040 012740 060003 000777
   G 100000 (break (^p)
   G 0  
-  
+```
+
 ### Howto run a paper tape
 
-pt "filename", e.g. pt ZKAAA0.BIN
+pt "filename", e.g.: 
+```
+pt ZKAAA0.BIN
 G 200
+```
 
 You can use the paper tape feature to run diagnostic (xxdp?) software.
 Some of them are available [here](https://github.com/aap/pdp11/tree/master/maindec).
+
 In the file [1140.c](https://github.com/aap/pdp11/blob/master/1140.c) there are comments
 what the files are about. On error they should HALT the machine, some seem to run forever.
 
@@ -172,7 +186,7 @@ Prepare some files:
 
 - an empty disk file
 - the v6 tape file
-- mkdevs.tap from the V6 directory here
+- mkdevs.tap from the V6 directory of this repository
 
 On a Unix system, create an empty disk file as model for new disk files:
 
@@ -180,21 +194,21 @@ On a Unix system, create an empty disk file as model for new disk files:
 dd if=/dev/zero of=empty.rkx bs=512 count=4872
 ```
 
-Get the [v6.tape.gz](https://www.tuhs.org/Archive/Distributions/Research/Ken_Wellsch_v6/v6.tape.gz).
-Look at a hex dump of the first lines of the tape, it should start with:
+Get the [v6.tape.gz](https://www.tuhs.org/Archive/Distributions/Research/Ken_Wellsch_v6/v6.tape.gz) file.
+Uncompress it. Look at a hex dump of the first lines of the tape, it should start with:
 
 ```
 00000000: 0701 ac01 0000 0000 0000 0000 0000 0100  ................
 ```
 
-If not the tape file must be converted using deblock from [this archive](https://www.tuhs.org/Archive/Distributions/Research/Bug_Fixes/V6enb/). This file also contains some fixes which can be applied to V6 later.
+If not, the tape file must be converted using deblock from [this archive](https://www.tuhs.org/Archive/Distributions/Research/Bug_Fixes/V6enb/). This archive also contains some fixes which can be applied to V6 later.
 
-Put all of these three files on the sd card and put it into the teensy, connect to your dev machine and connect your terminal
-program.
+Put all of these three files on the sd card and put it into the teensy, connect to your dev machine and start your terminal
+program using the correct serial device. (See above).
 
 #### Installing V6
 
-You can basically follow [this](http://mercury.lcs.mit.edu/~jnc/tech/V6Unix.html) or [that](https://gunkies.org/wiki/Installing_UNIX_v6_(PDP-11)_on_SIMH). The tape loader program is entered differently but once V6 booted the info from the
+You can basically follow [this](http://mercury.lcs.mit.edu/~jnc/tech/V6Unix.html) or [that](https://gunkies.org/wiki/Installing_UNIX_v6_(PDP-11)_on_SIMH). The tape loader program is entered differently, but once V6 booted, the info from the
 web pages should apply.
 
 Using the small "shell" do: (don't type # comments)
@@ -214,14 +228,15 @@ Using the small "shell" do: (don't type # comments)
     # enter tape loader into mem (type into shell)
   > 100000 012700 172526 010040 012740 060003 000777
   G 100000
+```
     
 	It should load the tape's boot block and will loop then, so press *CTRL-P*.
   If back in shell, type *G 0*. If you get the *=* prompt, follow the instructions from the links above.
 
   Example install session:
 
-  ```
-  I2C bus addr:
+```
+I2C bus addr:
 CPU  : 600 MHz
 PSRAM: 16Mb
 ITCM : 128kB, DTCM: 384kB, OCRAM: 0(+512)kB [DDDDDDDDDDDDIIII]
