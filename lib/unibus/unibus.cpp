@@ -66,6 +66,7 @@ void reset() {
   } else {
     Serial.printf("Using EXTMEM: %dMb\r\n", external_psram_size);
     core16 = (uint16_t *) (0x70000000);
+    core8 = (uint8_t *) core16;
   }
   memset(&core16[0], 0, MEM);
   SLR = 0;

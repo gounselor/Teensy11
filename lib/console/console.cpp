@@ -226,8 +226,8 @@ CLI_COMMAND(tmCmd) {
     return 1;
   }
   int tape = atoi(argv[1]);
-  if (tape > 4) {
-    dev->printf("max tape number is 4\r\n");
+  if (tape > 8) {
+    dev->printf("max tape number is 8\r\n");
     return 2;
   }
   if (argv[2][0] == '-') {
