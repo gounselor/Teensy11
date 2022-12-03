@@ -230,10 +230,10 @@ Using the small "shell" do: (don't type # comments)
   G 100000
 ```
     
-	It should load the tape's boot block and will loop then, so press *CTRL-P*.
-  If back in shell, type `G 0`. If you get the `=` prompt, follow the instructions from the links above.
+It should load the tape's boot block and will loop then, so press *CTRL-P*.
+If back in shell, type `G 0`. If you get the `=` prompt, follow the instructions from the links above.
 
-  Example install session:
+#### Example install session:
 
 ```
 I2C bus addr:
