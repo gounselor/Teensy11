@@ -1,7 +1,7 @@
 /etc/mknod /dev/rk0 b 0 0
 /etc/mknod /dev/rk1 b 0 1
 /etc/mknod /dev/rk2 b 0 2
-/etc/mknod /dev/rk2 b 0 3
+/etc/mknod /dev/rk3 b 0 3
 /etc/mknod /dev/mt0 b 3 0
 /etc/mknod /dev/tap0 b 4 0
 /etc/mknod /dev/rrk0 c 9 0
