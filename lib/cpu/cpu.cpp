@@ -62,7 +62,7 @@ void reset(void) {
   unibus::write16(000010, 000012);
   unibus::write16(000012, 000000); 
   unibus::write16(000024, 000026); 
-  unibus::write16(000024, 000000); 
+  unibus::write16(000026, 000000); 
   mmu::reset();
   dl11::reset();
   rk11::reset();
